@@ -25,7 +25,7 @@ function reducer(state, action) {
   }
 }
 
-function useAsync(callback, deps = []) {
+function useAsync(callback, deps = [], skip = false) {
   const [state, dispatch] = useReducer(reducer, { loading: false, data: null, error: null });
 
   const fetchData = async () => {
@@ -39,6 +39,7 @@ function useAsync(callback, deps = []) {
   };
 
   useEffect(() => {
+    if (skip) return;
     fetchData();
     // eslint-disable-next-line
   }, deps);
